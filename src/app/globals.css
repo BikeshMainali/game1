@@ -40,3 +40,110 @@ a {
     color-scheme: dark;
   }
 }
+
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #000;
+  color: white;
+  padding: 20px;
+}
+
+
+.square {
+  background: #fff;
+  border: 2px solid #444;
+  float: left;
+  font-size: 32px;
+  font-weight: bold;
+  line-height: 64px;
+  height: 64px;
+  width: 64px;
+  margin: 2px;
+  padding: 0;
+  text-align: center;
+  color: black;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+
+.square:hover {
+  background: #f0f0f0;
+  transform: scale(1.05);
+}
+
+
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+
+.status {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+
+.game-info button {
+  margin: 4px 0;
+  padding: 6px 12px;
+  background: #444;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.game-info button:hover {
+  background: #666;
+}
+
+
+@media (max-width: 500px) {
+  .square {
+    height: 48px;
+    width: 48px;
+    font-size: 24px;
+    line-height: 48px;
+  }
+
+  .status {
+    font-size: 20px;
+  }
+}
+
+.status.winner {
+  color: #00ffae;
+  font-size: 28px;
+  font-weight: bold;
+  animation: glow 1s infinite alternate;
+}
+
+.moves button {
+  display: block;
+  margin: 5px 0;
+  background: #333;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.moves button:hover {
+  background: #555;
+}
+@keyframes glow {
+  from {
+    text-shadow: 0 0 5px #00ffae, 0 0 10px #00ffae, 0 0 20px #00ffae;
+  }
+  to {
+    text-shadow: 0 0 10px #00ffaa, 0 0 20px #00ffaa, 0 0 30px #00ffaa;
+  }
+}
+
