@@ -1,13 +1,19 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --primary: #00ffae;
+  --secondary: #444;
+  --hover: #f0f0f0;
+  --square-bg: #fff;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
-  }
+    --secondary: #666;
+    --hover: #1a1a1a;
+    --square-bg: #111;
 }
 
 html,
@@ -22,6 +28,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background 0.3s, color 0.3s;
 }
 
 * {
@@ -35,115 +42,224 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-}
-
 .game {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: #000;
-  color: white;
-  padding: 20px;
+  gap: 24px;
 }
-
-
-.square {
-  background: #fff;
-  border: 2px solid #444;
-  float: left;
-  font-size: 32px;
-  font-weight: bold;
-  line-height: 64px;
-  height: 64px;
-  width: 64px;
-  margin: 2px;
-  padding: 0;
-  text-align: center;
-  color: black;
-  transition: all 0.2s ease;
-  cursor: pointer;
-}
-
-
-.square:hover {
-  background: #f0f0f0;
-  transform: scale(1.05);
-}
-
-
-.board-row:after {
-  clear: both;
-  content: "";
-  display: table;
-}
-
 
 .status {
   margin-bottom: 20px;
-  font-size: 24px;
-}
-
-
-.game-info button {
-  margin: 4px 0;
-  padding: 6px 12px;
-  background: #444;
-  color: white;
-  border: none;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.game-info button:hover {
-  background: #666;
-}
-
-
-@media (max-width: 500px) {
-  .square {
-    height: 48px;
-    width: 48px;
-    font-size: 24px;
-    line-height: 48px;
-  }
-
-  .status {
-    font-size: 20px;
-  }
+  font-size: 26px;
+  text-align: center;
+  font-weight: 600;
 }
 
 .status.winner {
-  color: #00ffae;
-  font-size: 28px;
+  color: var(--primary);
+  font-size: 32px;
   font-weight: bold;
-  animation: glow 1s infinite alternate;
+  text-align: center;
+  animation: glow 1.5s ease-in-out infinite alternate;
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
-.moves button {
-  display: block;
-  margin: 5px 0;
-  background: #333;
-  color: white;
-  border: none;
-  padding: 8px 12px;
+.board-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.square {
+  background: var(--square-bg);
+  border: 2px solid var(--secondary);
+  font-size: 32px;
+  font-weight: bold;
+  height: 72px;
+  width: 72px;
+  margin: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
   cursor: pointer;
+  border-radius: 8px;
 }
 
-.moves button:hover {
-  background: #555;
+.square:hover {
+  background: var(--hover);
+  transform: scale(1.05);
 }
+
+.square:focus {
+  outline: 2px solid var(--primary);
+}
+
+.square.winning {
+  background: var(--primary);
+  color: black;
+  animation: pulse 0.8s infinite alternate;
+}
+
+@media (max-width: 500px) {
+  .square {
+    height: 56px;
+    width: 56px;
+    font-size: 24px;
+  }
+  .status {
+    font-size: 22px;
+  }
+}
+
 @keyframes glow {
+  0% {
+    text-shadow: 0 0 5px var(--primary), 0 0 10px var(--primary), 0 0 20px var(--primary);
+    transform: scale(1);
+  }
+  50% {
+    text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary), 0 0 40px var(--primary);
+    transform: scale(1.05);
+  }
+  100% {
+    text-shadow: 0 0 20px var(--primary), 0 0 40px var(--primary), 0 0 60px var(--primary);
+    transform: scale(1.1);
+  }
+}
+
+@keyframes pulse {
   from {
-    text-shadow: 0 0 5px #00ffae, 0 0 10px #00ffae, 0 0 20px #00ffae;
+    transform: scale(1);
   }
   to {
-    text-shadow: 0 0 10px #00ffaa, 0 0 20px #00ffaa, 0 0 30px #00ffaa;
+    transform: scale(1.08);
   }
 }
 
+.restart-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: var(--primary);
+  color: #000;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  box-shadow: 0 0 10px var(--primary);
+  transition: all 0.3s ease;
+}
+
+.restart-btn:hover {
+  background: var(--primary);
+  box-shadow: 0 0 20px var(--primary), 0 0 30px var(--primary);
+  transform: translateY(-2px);
+}
+.board-row {
+  display: flex;
+}
+
+.game-board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px; /* spacing between rows */
+}
+
+/* Square styling */
+.square {
+  background: var(--square-bg);
+  border: 2px solid var(--secondary);
+  font-size: 32px;
+  font-weight: bold;
+  height: 72px;
+  width: 72px;
+  margin: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  cursor: pointer;
+  border-radius: 12px; /* slightly more rounded */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.square:hover {
+  background: var(--hover);
+  transform: scale(1.05);
+}
+
+.square:focus {
+  outline: 2px solid var(--primary);
+}
+
+.square.winning {
+  background: var(--primary);
+  color: black;
+  animation: pulse 0.8s infinite alternate;
+  box-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary);
+}
+
+/* Glowing winner text */
+.status.winner {
+  color: var(--primary);
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
+  animation: glow 1.5s ease-in-out infinite alternate;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 5px var(--primary), 0 0 10px var(--primary);
+    transform: scale(1);
+  }
+  50% {
+    text-shadow: 0 0 15px var(--primary), 0 0 30px var(--primary);
+    transform: scale(1.05);
+  }
+  100% {
+    text-shadow: 0 0 25px var(--primary), 0 0 50px var(--primary);
+    transform: scale(1.1);
+  }
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .square {
+    height: 56px;
+    width: 56px;
+    font-size: 24px;
+  }
+  .status {
+    font-size: 22px;
+  }
+}
+.restart-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #0d6efd;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+.restart-btn:hover {
+  background-color: #0b5ed7;
+}
